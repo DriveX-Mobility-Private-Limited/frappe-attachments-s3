@@ -214,6 +214,7 @@ def file_upload_to_s3(doc, method):
         if doc.is_private:
             method = "frappe_s3_attachment.controller.generate_file"
             file_url = """/api/method/{0}?key={1}&file_name={2}""".format(method, key, doc.file_name)
+            file_url = frappe.utils.get_url(file_url)
         else:
             file_url = '{}/{}/{}'.format(
                 s3_upload.S3_CLIENT.meta.endpoint_url,
@@ -278,6 +279,7 @@ def upload_existing_files_s3(name):
         if doc.is_private:
             method = "frappe_s3_attachment.controller.generate_file"
             file_url = """/api/method/{0}?key={1}""".format(method, key)
+            file_url = frappe.utils.get_url(file_url)
         else:
             file_url = '{}/{}/{}'.format(
                 s3_upload.S3_CLIENT.meta.endpoint_url,
